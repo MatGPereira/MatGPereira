@@ -29,7 +29,5 @@ jobs:
           git commit -m "Update from GitHub Actions"
     
       - name: Commit changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_README_STATS_TOKEN }}
         run: |
           git push
