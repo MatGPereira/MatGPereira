@@ -11,17 +11,26 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "action@github.com"
+
       - name: Generate GitHub Stats
         run: |
           curl "https://github-readme-stats.vercel.app/api?username=${{ github.repository_owner }}&show_icons=true&theme=dracula&include_all_commits=true&count_private=true&token=${{ secrets.GH_README_STATS_TOKEN }}" > stats.svg
           curl "https://github-readme-stats.vercel.app/api/top-langs/?username=${{ github.repository_owner }}&layout=compact&langs_count=7&theme=dracula&token=${{ secrets.GH_README_STATS_TOKEN }}" > top-langs.svg
       
-      - name: Commit changes
+      
+      - name: Make changes
         run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
-          git add stats.svg
-          git add top-langs.svg
+          git add .
+          git commit -m "Update from GitHub Actions"
+    
+      - name: Commit changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_README_STATS_TOKEN }}
+        run: |
           git commit -m "Updated GitHub Stats"
           git push
