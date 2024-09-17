@@ -32,5 +32,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GH_README_STATS_TOKEN }}
         run: |
-          git commit -m "Updated GitHub Stats"
           git push
