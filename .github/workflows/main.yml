@@ -1,4 +1,4 @@
-name: README
+name: GitHub Profile 3D Contrib
 
 on:
   schedule:
@@ -9,12 +9,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     name: generate-github-profile-3d-contrib
+    permissions:
+      contents: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - uses: yoshi389111/github-profile-3d-contrib@0.6.0
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_README_STATS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
 
       - name: Commit & Push
@@ -23,4 +27,4 @@ jobs:
           git config user.email github-actions@github.com
           git add -A
           git commit -m "generated" || echo "No changes to commit"
-          git push https://x-access-token:${{ secrets.GH_README_STATS_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
+          git push
